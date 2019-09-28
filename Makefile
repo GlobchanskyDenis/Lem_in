@@ -6,7 +6,7 @@
 #    By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/16 14:32:21 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/09/28 13:19:50 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/09/28 16:55:58 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,9 @@ SRC_LEMIN	= $(DIR)main.c					$(DIR)new_room.c		\
 			  $(DIR)get_first_last_room.c	$(DIR)temp.c			\
 			  $(DIR)free.c					$(DIR)make_linkage.c	\
 			  $(DIR)array.c					$(DIR)dijkstra_1.c		\
-			  $(DIR)queue.c					$(DIR)dijkstra_2.c		\
-			  $(DIR)karpov-globchansky.c	$(DIR)karpov-globchansky_2.c
+			  $(DIR)karpov_globchansky_1.c	$(DIR)dijkstra_2.c		\
+			  $(DIR)karpov_globchansky_2.c	$(DIR)queue.c			\
+			  $(DIR)karpov_globchansky_3.c
 SRC_GRAFIX	= 
 INC_LEMIN	= $(DIR)lem_in.h
 INC_GRAFIX	= $(DIR)grafix.h
@@ -50,12 +51,13 @@ clean :
 fclean : clean
 			@rm -f $(L_FT_A)
 			@rm -f $(LEMIN_NAME)
+			@rm -f log.txt
 
 lemin :
-			@rm -r log.txt
+			@rm -f log.txt
 			@touch log.txt
 			@chmod 777 log.txt
-			@./$(LEMIN_NAME) < maps/src4
+			@./$(LEMIN_NAME) < maps/src7
 			@rm -rf lem-in.dSYM
 
 all : $(LEMIN_NAME)

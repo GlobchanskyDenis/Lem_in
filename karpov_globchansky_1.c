@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   karpov-globchansky.c                               :+:      :+:    :+:   */
+/*   karpov_globchansky_1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:19:03 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 12:32:16 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/28 16:28:59 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,6 @@ static short	find_conflicts(t_list **way_arr, t_data *s)
 
 	if (!way_arr || !s)
 		return (-1);
-	/*
-	i = -1;
-	while (way_arr[i + 1])
-		i++;
-	if (i < 0 || !(lst = way_arr[i]))
-		return (-1);
-	while (lst)
-	{
-		room = lst->content;
-		if (room->room_flag == FLAG_ROOM && room->way != i + 1)
-			return (1);
-		lst = lst->next;
-	}
-	*/
 	i = 0;
 	while (way_arr[i])
 	{
@@ -78,6 +64,24 @@ static short	find_conflicts(t_list **way_arr, t_data *s)
 	return (0);
 }
 
+static void		find_and_solve_conflicts(t_room *room, t_data *s, \
+		t_list **way_arr)
+{
+	if (!room || !s || !way_arr)
+		return ;
+	while (find_conflicts(way_arr, s) > 0)
+	{
+		fprint_fd(s->fd, "conflict was found!!\n");
+		temp_print_roomlist(room, s);
+		print_all_ways(way_arr, s);
+		if (conflict_solver(way_arr, s) < 0)
+		{
+			fprint_fd(s->fd, "conflict was not solved\n");
+			return ;
+		}
+	}
+}
+
 t_list			**karpov_globchansky(t_room *room, t_data *s)
 {
 	t_list	**way_arr;
@@ -92,20 +96,16 @@ t_list			**karpov_globchansky(t_room *room, t_data *s)
 	i = 0;
 	while ((way = dijkstra(i + 1, room, s)))
 	{
+		fprint_fd(s->fd, "\n\nnew way!\n");
+		temp_print_roomlist(room, s);
+		print_way(way, i + 1, s);
 		if (!(way_arr = make_bigger_tlist_array(way_arr)))
 		{
 			kill_tlist(way);
 			return (NULL);
 		}
 		way_arr[i++] = way;
-		while (find_conflicts(way_arr, s) > 0)
-		{
-			fprint_fd(s->fd, "conflict was found!\n");
-			temp_print_roomlist(room, s);
-			print_all_ways(way_arr, s);
-			if (conflict_solver(way_arr, s) < 0)
-				fprint_fd(s->fd, "conflict was not solved\n");
-		}
+		find_and_solve_conflicts(room, s, way_arr);
 	}
 	return (way_arr);
 }

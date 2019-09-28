@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:07:49 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/27 15:53:00 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/28 15:55:01 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,7 @@ static t_room	*find_way_and_set_not_allowed(t_room *room, int way, t_data *s)
 	if (!room || !s)
 		return (NULL);
 	i = 0;
-	while (room->link[i] && room->link[i]->mark != room->mark - 1)
-	{
-		//fprint_fd(s->fd, "%s %d %d %s\n", room->name, room->mark, room->link[i]->mark, room->link[i]->name);
-		i++;
-	}
-	//dst = room->link[i];
-	if (!(dst = room->link[i]))
+	if (!(dst = room->prev_room))
 		return (NULL);
 	i = 0;
 	while (dst->link && dst->link[i] && dst->link[i] != room)
@@ -74,7 +68,6 @@ static t_list	*make_way_lst(int way, t_room *room, t_data *s)
 
 	if (!room || !s)
 		free_exit(room, s, 0, "ERROR: make_way_lst empty ptr");
-	//fprint_fd(s->fd, "make_way_lst START\n");
 	while (room->next)
 		room = room->next;
 	if (!(lst = ft_lstnew_fag(room, 0)))
@@ -90,7 +83,6 @@ static t_list	*make_way_lst(int way, t_room *room, t_data *s)
 		lst = tmp;
 	}
 	((t_room *)(lst->content))->way = 0;
-	//fprint_fd(s->fd, "make_way_lst END\n");
 	return (lst);
 }
 
@@ -104,10 +96,7 @@ t_list			*dijkstra(int way, t_room *room, t_data *s)
 	while (queue)
 	{
 		if (mark_links_till_end(queue, room, s))
-		{
-			//fprint_fd(s->fd, "NORMAL END\n");
 			break ;
-		}
 		queue = queue_kill_go_next(queue, room, s);
 	}
 	if (!queue)

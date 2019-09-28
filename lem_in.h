@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:39:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 11:56:38 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/28 16:52:17 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void			kill_tlist(t_list *lst);
 void			kill_tlist_array(t_list **arr);
 t_list			**karpov_globchansky(t_room *room, t_data *s);
 int				conflict_solver(t_list **way_arr, t_data *s);
+void			its_alive(t_list **way_arr, t_data *s);
 
 #endif
