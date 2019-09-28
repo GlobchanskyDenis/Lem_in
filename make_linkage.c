@@ -66,7 +66,7 @@ static void		make_not_allowed_arrays(t_room *room, t_data *s)
 	{
 		i = 0;
 		if (!(room->link))
-			free_exit(room, s, 0, "ERROR: one or more rooms has not links");
+			free_exit(room, s, 0, "one or more rooms has not links");
 		while (room->link[i])
 			i++;
 		room->not_allowed = (short *)malloc(sizeof(short) * (i + 1));
@@ -82,14 +82,14 @@ void			make_linkage(t_room *lst, t_data *s)
 	t_room		*room2;
 
 	if (!lst || !s)
-		free_exit(lst, s, 1, "ERROR: make_linkage empty pointer");
+		free_exit(lst, s, 1, "make_linkage empty pointer");
 	while (s->line && ft_strlen(s->line) > 2 && ft_strchr(s->line, (int)'-'))
 	{
 		if (!(arr = ft_strsplit(s->line, '-')) || count_words(arr) != 2)
-			free_exit(lst, s, 1, "ERROR: make_linkage empty pointer");
+			free_exit(lst, s, 1, "make_linkage empty pointer");
 		if (!(room1 = find_room(lst, arr[0], s)) || \
 				!(room2 = find_room(lst, arr[1], s)))
-			free_exit(lst, s, 1, "ERROR: make_linkage empty pointer");
+			free_exit(lst, s, 1, "make_linkage empty pointer");
 		if (link_isnt_exists(room1, room2, s) > 0)
 		{
 			room1->link = make_bigger_array_and_fill(room1->link, room2);

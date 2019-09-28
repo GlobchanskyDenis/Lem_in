@@ -40,7 +40,7 @@ int			mark_links_till_end(t_list *queue, t_room *room_lst, t_data *s)
 	if (!queue || !room_lst || !s)
 	{
 		ft_lstdel_fag(&queue);
-		free_exit(room_lst, s, 0, "ERROR: mark_links_till_end empty ptr");
+		free_exit(room_lst, s, 0, "mark_links_till_end empty ptr");
 	}
 	i = 0;
 	room = queue->content;

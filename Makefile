@@ -6,13 +6,13 @@
 #    By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/16 14:32:21 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/09/28 16:55:58 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/09/28 17:24:15 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LEMIN_NAME	= lem-in
 GRAF_NAME	= grafix.out
-FLAGS		= -Wall -Wextra -Werror 
+FLAGS		= -Wall -Wextra -Werror -g 
 
 # directories
 DIR		=	./
@@ -57,7 +57,7 @@ lemin :
 			@rm -f log.txt
 			@touch log.txt
 			@chmod 777 log.txt
-			@./$(LEMIN_NAME) < maps/src7
+			@valgrind --leak-check=full --show-leak-kinds=all -v ./$(LEMIN_NAME) < maps/src7
 			@rm -rf lem-in.dSYM
 
 all : $(LEMIN_NAME)

@@ -20,7 +20,7 @@ static int		is_need_to_add_room(t_room *room, t_data *s, short *room_flag)
 	{
 		if (*room_flag != FLAG_ROOM && (!ft_strncmp(s->line, "##start", 7) || \
 				!ft_strncmp(s->line, "##end", 5)))
-			free_exit(room, s, 1, "ERROR: double start / end commit!");
+			free_exit(room, s, 1, "double start / end commit!");
 		if (!ft_strncmp(s->line, "##start", 7))
 			*room_flag = FLAG_START;
 		else if (!ft_strncmp(s->line, "##end", 5))
@@ -36,9 +36,9 @@ static t_room	*add_room(t_room *room, t_data *s, short *room_flag)
 	t_room		*tmp;
 
 	if (!s)
-		free_exit(room, s, 1, "ERROR: add_room empty pointer");
+		free_exit(room, s, 1, "add_room empty pointer");
 	if (!(tmp = new_room(&(s->line), *room_flag)))
-		free_exit(room, s, 1, "ERROR: add_room empty pointer");
+		free_exit(room, s, 1, "add_room empty pointer");
 	*room_flag = FLAG_ROOM;
 	fprint_fd(s->fd, "room was created. Name '%s' x '%d' y '%d'\n", \
 			tmp->name, tmp->width, tmp->height);
@@ -56,7 +56,7 @@ static void		check_names(t_room *room, t_data *s)
 	t_room		*prev;
 
 	if (!room || !s)
-		free_exit(room, s, 1, "ERROR: check_names empty pointer");
+		free_exit(room, s, 1, "check_names empty pointer");
 	while (room->next)
 		room = room->next;
 	while (room->prev)
@@ -65,7 +65,7 @@ static void		check_names(t_room *room, t_data *s)
 		while (prev)
 		{
 			if (!ft_strcmp(room->name, prev->name))
-				free_exit(room, s, 1, "ERROR: check_names invalid name");
+				free_exit(room, s, 1, "check_names invalid name");
 			prev = prev->prev;
 		}
 		room = room->prev;
@@ -79,7 +79,7 @@ t_room			*read_rooms(t_data *s)
 	short		room_flag;
 
 	if (!s)
-		free_exit(NULL, s, 1, "ERROR: read_rooms empty pointer");
+		free_exit(NULL, s, 1, "read_rooms empty pointer");
 	is_room_flag = 1;
 	room_flag = FLAG_ROOM;
 	room = NULL;
@@ -93,7 +93,7 @@ t_room			*read_rooms(t_data *s)
 			if (is_need_to_add_room(room, s, &room_flag) == 1)
 			{
 				if (!(room = add_room(room, s, &room_flag)))
-					free_exit(room, s, 1, "ERROR: read_rooms empty pointer");
+					free_exit(room, s, 1, "read_rooms empty pointer");
 			}
 		}
 	}

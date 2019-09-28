@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:09:16 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/26 14:50:43 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/28 20:13:42 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,19 @@ static void	kill_roomlist(t_room *room)
 	}
 }
 
+static void	print_message(t_data *s, char *message)
+{
+	if (!s)
+		return ;
+	if (!s->exit_without_message)
+	{
+		if (s->err_flag_on && message)
+			fprint("ERROR: %s\n", message);
+		else
+			fprint("ERROR\n");
+	}
+}
+
 void		free_exit(t_room *room, t_data *s, int need_to_read_all, \
 		char *message)
 {
@@ -86,11 +99,12 @@ void		free_exit(t_room *room, t_data *s, int need_to_read_all, \
 	}
 	if (s)
 	{
+		print_message(s, message);
 		if (s->line)
 			ft_strdel(&(s->line));
 		free(s);
 	}
-	if (message)
-		fprint("%s\n", message);
+	else
+		fprint("ERROR\n");
 	exit(0);
 }

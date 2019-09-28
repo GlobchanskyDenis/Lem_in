@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:49:39 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 16:41:29 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/28 20:14:59 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,24 @@ static int	read_ants(t_data *s)
 	return (1);
 }
 
-int			main(void)
+static void	check_flags(int ac, char **av, t_data *s)
+{
+	int		i;
+
+	if (!av || !s || ac < 2)
+		return ;
+	i = 1;
+	while (i < ac)
+	{
+		if (!ft_strcmp(av[i], "-error"))
+			s->err_flag_on = 1;
+		if (!ft_strcmp(av[i], "-grafix"))
+			s->grafix_on = 1;
+		i++;
+	}
+}
+
+int			main(int ac, char **av)
 {
 	t_room	*room;
 	t_data	*s;
@@ -46,17 +63,19 @@ int			main(void)
 	if (!(s = (t_data *)malloc(sizeof(t_data))))
 		return (-1);
 	ft_bzero(s, sizeof(t_data));
+	check_flags(ac, av, s);
 	s->fd = open("log.txt", O_RDWR | O_CREAT);
 	if (!read_ants(s))
-		free_exit(NULL, s, 1, "ERROR: read ants");
+		free_exit(NULL, s, 1, "read ants");
 	ft_strdel(&(s->line));
 	if (!(room = read_rooms(s)))
-		free_exit(room, s, 1, "ERROR: read rooms incorrect");
+		free_exit(room, s, 1, "read rooms incorrect");
 	make_linkage(room, s);
 	if (!(way_arr = karpov_globchansky(room, s)))
 		free_exit(room, s, 0, "no ways");
 	temp_print_roomlist(room, s);
 	print_all_ways(way_arr, s);
+	s->exit_without_message = 1;
 	kill_tlist_array(way_arr);
 	free_exit(room, s, 0, NULL);
 	return (0);

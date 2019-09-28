@@ -17,7 +17,7 @@ static t_list	*init_algorithm(t_room *room, t_data *s)
 	t_list	*dst;
 
 	if (!room || !s)
-		free_exit(room, s, 0, "ERROR: init_algorithm empty ptr");
+		free_exit(room, s, 0, "init_algorithm empty ptr");
 	while (room->next)
 		room = room->next;
 	while (room->prev)
@@ -67,18 +67,18 @@ static t_list	*make_way_lst(int way, t_room *room, t_data *s)
 	t_room	*tmp_room;
 
 	if (!room || !s)
-		free_exit(room, s, 0, "ERROR: make_way_lst empty ptr");
+		free_exit(room, s, 0, "make_way_lst empty ptr");
 	while (room->next)
 		room = room->next;
 	if (!(lst = ft_lstnew_fag(room, 0)))
-		free_exit(room, s, 0, ": malloc error");
+		free_exit(room, s, 0, "malloc error");
 	while (room && room->room_flag != FLAG_START)
 	{
 		if (!(tmp_room = find_way_and_set_not_allowed(room, way, s)))
-			free_all_and_exit(&lst, room, s, ": make_way_lst empty ptr");
+			free_all_and_exit(&lst, room, s, "make_way_lst empty ptr");
 		room = tmp_room;
 		if (!(tmp = ft_lstnew_fag(room, lst->content_size + 1)))
-			free_all_and_exit(&lst, room, s, ": make_way_lst malloc error");
+			free_all_and_exit(&lst, room, s, "make_way_lst malloc error");
 		tmp->next = lst;
 		lst = tmp;
 	}
@@ -91,7 +91,7 @@ t_list			*dijkstra(int way, t_room *room, t_data *s)
 	t_list	*queue;
 
 	if (!room || !s)
-		free_exit(room, s, 0, "ERROR: dijkstra empty ptr");
+		free_exit(room, s, 0, "dijkstra empty ptr");
 	queue = init_algorithm(room, s);
 	while (queue)
 	{

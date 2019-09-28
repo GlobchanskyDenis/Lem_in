@@ -18,7 +18,7 @@ static t_room	*cut_room_from_list(t_room *room, t_room **lst, t_data *s)
 	t_room		*next;
 
 	if (!room || !lst || !s)
-		free_exit(room, s, 1, "ERROR: cut_room_from_list - empty pointer");
+		free_exit(room, s, 1, "cut_room_from_list - empty pointer");
 	prev = room->prev;
 	next = room->next;
 	room->prev = NULL;
@@ -28,7 +28,7 @@ static t_room	*cut_room_from_list(t_room *room, t_room **lst, t_data *s)
 	if (next)
 		next->prev = prev;
 	if (!prev && !next)
-		free_exit(room, s, 1, "ERROR: cut_room_from_list - to few rooms");
+		free_exit(room, s, 1, "cut_room_from_list - to few rooms");
 	if (next)
 		*lst = next;
 	else
@@ -41,7 +41,7 @@ static t_room	*pullup_first_room(t_room *room, t_data *s)
 	t_room		*lst;
 
 	if (!room || !s)
-		free_exit(room, s, 1, "ERROR: pullup_first_room - empty pointer");
+		free_exit(room, s, 1, "pullup_first_room - empty pointer");
 	while (room->next)
 		room = room->next;
 	while (room->prev && room->room_flag != FLAG_START)
@@ -61,13 +61,13 @@ static t_room	*pushback_last_room(t_room *room, t_data *s)
 	t_room		*lst;
 
 	if (!room || !s)
-		free_exit(room, s, 1, "ERROR: pushback_last_room - empty pointer");
+		free_exit(room, s, 1, "pushback_last_room - empty pointer");
 	while (room->next)
 		room = room->next;
 	while (room->prev && room->room_flag != FLAG_END)
 		room = room->prev;
 	if (room->room_flag != FLAG_END)
-		free_exit(room, s, 1, "ERROR: last room expected");
+		free_exit(room, s, 1, "last room expected");
 	room = cut_room_from_list(room, &lst, s);
 	while (lst->next)
 		lst = lst->next;
@@ -79,13 +79,13 @@ static t_room	*pushback_last_room(t_room *room, t_data *s)
 static void		check_for_wrong_start_end_rooms(t_room *room, t_data *s)
 {
 	if (!room || !s)
-		free_exit(room, s, 1, "ERROR: check rooms - empty pointer");
+		free_exit(room, s, 1, "check rooms - empty pointer");
 	while (room->prev)
 		room = room->prev;
 	while (room)
 	{
 		if (room->prev && room->next && room->room_flag != FLAG_ROOM)
-			free_exit(room, s, 1, "ERROR: double start / end found");
+			free_exit(room, s, 1, "double start / end found");
 		room = room->next;
 	}
 }
@@ -93,7 +93,7 @@ static void		check_for_wrong_start_end_rooms(t_room *room, t_data *s)
 t_room			*get_first_last_room(t_room *room, t_data *s)
 {
 	if (!room || !s || (room->next == NULL && room->prev == NULL))
-		free_exit(room, s, 1, "ERROR: get_first_room empty pointer");
+		free_exit(room, s, 1, "get_first_room empty pointer");
 	temp_print_roomlist(room, s);
 	room = pushback_last_room(room, s);
 	room = pullup_first_room(room, s);

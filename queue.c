@@ -32,7 +32,7 @@ t_list		*queue_kill_go_next(t_list *queue, t_room *room, t_data *s)
 	if (!queue || !room || !s)
 	{
 		ft_lstdel_fag(&queue);
-		free_exit(room, s, 0, "ERROR: queue_kill_go_next empty ptr");
+		free_exit(room, s, 0, "queue_kill_go_next empty ptr");
 	}
 	tmp = queue;
 	queue = queue->next;
