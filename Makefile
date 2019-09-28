@@ -6,11 +6,11 @@
 #    By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/16 14:32:21 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/09/23 12:18:29 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/09/28 13:19:50 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LEMIN_NAME	= lem_in.out
+LEMIN_NAME	= lem-in
 GRAF_NAME	= grafix.out
 FLAGS		= -Wall -Wextra -Werror 
 
@@ -22,8 +22,9 @@ SRC_LEMIN	= $(DIR)main.c					$(DIR)new_room.c		\
 			  $(DIR)read_rooms.c			$(DIR)gnl.c				\
 			  $(DIR)get_first_last_room.c	$(DIR)temp.c			\
 			  $(DIR)free.c					$(DIR)make_linkage.c	\
-			  $(DIR)array.c					$(DIR)dijkstra.c		\
-			  $(DIR)queue.c
+			  $(DIR)array.c					$(DIR)dijkstra_1.c		\
+			  $(DIR)queue.c					$(DIR)dijkstra_2.c		\
+			  $(DIR)karpov-globchansky.c	$(DIR)karpov-globchansky_2.c
 SRC_GRAFIX	= 
 INC_LEMIN	= $(DIR)lem_in.h
 INC_GRAFIX	= $(DIR)grafix.h
@@ -54,7 +55,8 @@ lemin :
 			@rm -r log.txt
 			@touch log.txt
 			@chmod 777 log.txt
-			@valgrind ./$(LEMIN_NAME) < maps/src2
+			@./$(LEMIN_NAME) < maps/src4
+			@rm -rf lem-in.dSYM
 
 all : $(LEMIN_NAME)
 

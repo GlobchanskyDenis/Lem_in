@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 17:17:35 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/19 14:18:38 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/27 19:58:05 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,8 @@ t_room			*get_first_last_room(t_room *room, t_data *s)
 	if (!room || !s || (room->next == NULL && room->prev == NULL))
 		free_exit(room, s, 1, "ERROR: get_first_room empty pointer");
 	temp_print_roomlist(room, s);
-	fprint_fd(s->fd, "pushback\n");
 	room = pushback_last_room(room, s);
-	fprint_fd(s->fd, "pullup\n");
 	room = pullup_first_room(room, s);
-	fprint_fd(s->fd, "check func\n");
 	check_for_wrong_start_end_rooms(room, s);
 	temp_print_roomlist(room, s);
 	return (room);

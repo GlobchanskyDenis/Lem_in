@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:44:51 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/21 15:51:08 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:39:48 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static int		link_isnt_exists(t_room *room1, t_room *room2, t_data *s)
 
 	if (!room1 || !room2 || !s)
 		return (-1);
-	fprint_fd(s->fd, "check for existing link\n");
 	i = 0;
 	while (room1->link && room1->link[i])
 	{
@@ -53,6 +52,27 @@ static int		link_isnt_exists(t_room *room1, t_room *room2, t_data *s)
 		i++;
 	}
 	return (1);
+}
+
+static void		make_not_allowed_arrays(t_room *room, t_data *s)
+{
+	int			i;
+
+	if (!room || !s)
+		return ;
+	while (room->prev)
+		room = room->prev;
+	while (room)
+	{
+		i = 0;
+		if (!(room->link))
+			free_exit(room, s, 0, "ERROR: one or more rooms has not links");
+		while (room->link[i])
+			i++;
+		room->not_allowed = (short *)malloc(sizeof(short) * (i + 1));
+		ft_bzero(room->not_allowed, sizeof(short) * (i + 1));
+		room = room->next;
+	}
 }
 
 void			make_linkage(t_room *lst, t_data *s)
@@ -81,4 +101,5 @@ void			make_linkage(t_room *lst, t_data *s)
 		free(arr);
 		gnl(0, &(s->line));
 	}
+	make_not_allowed_arrays(lst, s);
 }

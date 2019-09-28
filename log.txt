@@ -1,56 +1,44 @@
 ants number = 12
-room was created. Name 'a' x '0' y '2'
+room was created. Name 'a' x '0' y '1'
 room was created. Name 'b' x '1' y '0'
-room was created. Name 'c' x '4' y '0'
-room was created. Name 'e' x '3' y '2'
-room was created. Name 'd' x '5' y '2'
-room was created. Name 'h' x '7' y '2'
-room was created. Name 'f' x '4' y '3'
-room was created. Name 'g' x '6' y '3'
+room was created. Name 'c' x '3' y '0'
+room was created. Name 'd' x '2' y '1'
+room was created. Name 'e' x '1' y '2'
+room was created. Name 'f' x '3' y '2'
+room was created. Name 'g' x '4' y '1'
 ===== rooms =====
-room 'a'	x '0' y '2'	 way 0	 mark 0	START	
+room 'a'	x '0' y '1'	 way 0	 mark 0	START	
 room 'b'	x '1' y '0'	 way 0	 mark 0	ROOM	
-room 'c'	x '4' y '0'	 way 0	 mark 0	ROOM	
-room 'e'	x '3' y '2'	 way 0	 mark 0	ROOM	
-room 'd'	x '5' y '2'	 way 0	 mark 0	ROOM	
-room 'h'	x '7' y '2'	 way 0	 mark 0	END	
-room 'f'	x '4' y '3'	 way 0	 mark 0	ROOM	
-room 'g'	x '6' y '3'	 way 0	 mark 0	ROOM	
+room 'c'	x '3' y '0'	 way 0	 mark 0	ROOM	
+room 'd'	x '2' y '1'	 way 0	 mark 0	ROOM	
+room 'e'	x '1' y '2'	 way 0	 mark 0	ROOM	
+room 'f'	x '3' y '2'	 way 0	 mark 0	ROOM	
+room 'g'	x '4' y '1'	 way 0	 mark 0	END	
 == end of list ==
-pushback
-pullup
-check func
 ===== rooms =====
-room 'a'	x '0' y '2'	 way 0	 mark 0	START	
+room 'a'	x '0' y '1'	 way 0	 mark 0	START	
 room 'b'	x '1' y '0'	 way 0	 mark 0	ROOM	
-room 'c'	x '4' y '0'	 way 0	 mark 0	ROOM	
-room 'e'	x '3' y '2'	 way 0	 mark 0	ROOM	
-room 'd'	x '5' y '2'	 way 0	 mark 0	ROOM	
-room 'f'	x '4' y '3'	 way 0	 mark 0	ROOM	
-room 'g'	x '6' y '3'	 way 0	 mark 0	ROOM	
-room 'h'	x '7' y '2'	 way 0	 mark 0	END	
+room 'c'	x '3' y '0'	 way 0	 mark 0	ROOM	
+room 'd'	x '2' y '1'	 way 0	 mark 0	ROOM	
+room 'e'	x '1' y '2'	 way 0	 mark 0	ROOM	
+room 'f'	x '3' y '2'	 way 0	 mark 0	ROOM	
+room 'g'	x '4' y '1'	 way 0	 mark 0	END	
 == end of list ==
-check for existing link
-check for existing link
-check for existing link
-check for existing link
-check for existing link
-check for existing link
-check for existing link
-check for existing link
-check for existing link
-check for existing link
-I found a way!!!!!
 ===== rooms =====
-room 'a'	x '0' y '2'	 way 1	 mark 1	START		|b	|e	|
-room 'b'	x '1' y '0'	 way 0	 mark 2	ROOM		|a	|c	|
-room 'c'	x '4' y '0'	 way 0	 mark 3	ROOM		|b	|d	|
-room 'e'	x '3' y '2'	 way 1	 mark 2	ROOM		|a	|d	|f	|
-room 'd'	x '5' y '2'	 way 1	 mark 3	ROOM		|c	|e	|f	|h	|
-room 'f'	x '4' y '3'	 way 0	 mark 3	ROOM		|e	|d	|g	|
-room 'g'	x '6' y '3'	 way 0	 mark 0	ROOM		|f	|h	|
-room 'h'	x '7' y '2'	 way 0	 mark 4	END		|d	|g	|
+room 'a'	x '0' y '1'	 way 0	 mark 1	START		|-b-	|-d-	|-e-	|
+room 'b'	x '1' y '0'	 way 2	 mark 0	ROOM		|a	|-c-	|
+room 'c'	x '3' y '0'	 way 2	 mark 0	ROOM		|b	|-g-	|
+room 'd'	x '2' y '1'	 way 1	 mark 0	ROOM		|a	|-g-	|
+room 'e'	x '1' y '2'	 way 3	 mark 0	ROOM		|a	|-f-	|
+room 'f'	x '3' y '2'	 way 3	 mark 0	ROOM		|e	|-g-	|
+room 'g'	x '4' y '1'	 way 0	 mark 0	END		|c	|d	|f	|
 == end of list ==
 === way 1 ===
-a - e - d - h
+a - d - g
+=== end ===
+=== way 2 ===
+a - b - c - g
+=== end ===
+=== way 3 ===
+a - e - f - g
 === end ===

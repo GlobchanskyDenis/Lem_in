@@ -6,11 +6,40 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:09:16 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/19 09:43:11 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/26 14:50:43 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void		kill_tlist(t_list *lst)
+{
+	t_list		*tmp;
+
+	if (!lst)
+		return ;
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+	}
+}
+
+void		kill_tlist_array(t_list **arr)
+{
+	short		i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		kill_tlist(arr[i]);
+		i++;
+	}
+	free(arr);
+}
 
 void		kill_room(t_room **room)
 {
@@ -37,6 +66,8 @@ static void	kill_roomlist(t_room *room)
 		{
 			tmp_room = room;
 			room = room->next;
+			if (tmp_room->not_allowed)
+				free(tmp_room->not_allowed);
 			kill_room(&tmp_room);
 		}
 	}

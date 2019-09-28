@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:49:39 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/23 12:19:27 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/27 14:40:47 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int			main(void)
 {
 	t_room	*room;
 	t_data	*s;
-	t_list	*lst;
+	t_list	**ways;
+	short	i;
 
 	room = NULL;
 	if (!(s = (t_data *)malloc(sizeof(t_data))))
@@ -54,12 +55,19 @@ int			main(void)
 	if (!(room = read_rooms(s)))
 		free_exit(room, s, 1, "ERROR: read rooms incorrect");
 	make_linkage(room, s);
-	if ((lst = dijkstra(1, room, s)))
-		fprint_fd(s->fd, "I found a way!!!!!\n");
+	if (!(ways = karpov_globchansky(room, s)))
+	{
+		fprint_fd(s->fd, "KARPOV_GLOBCHANSKY returned NULL\n");
+		free_exit(room, s, 0, "FIN");
+	}
 	temp_print_roomlist(room, s);
-	print_way(&lst, 1, s);
-
-	//algorithm(room, data);
+	i = 0;
+	while (ways[i])
+	{
+		print_way(ways[i], i + 1, s);
+		i++;
+	}
+	kill_tlist_array(ways);
 	free_exit(room, s, 0, NULL);
 	return (0);
 }
