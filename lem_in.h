@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:39:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 20:13:20 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/29 13:55:45 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct	s_data
 	char			*end_conf;
 	int				err_flag_on;
 	int				grafix_on;
+	int				full_logs_on;
 	int				exit_without_message;
 }				t_data;
 

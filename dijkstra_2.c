@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:45:30 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 15:57:36 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/29 13:57:45 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ static int	can_go_here(t_room *room, int i, t_data *s)
 		if (room->link[i]->way == room->way || !(room->prev_room) || \
 				(room->prev_room && room->prev_room->way == room->way))
 		{
-			fprint_fd(s->fd, "room %s can go to %s\n", \
-					room->name, room->link[i]->name);
+			if (s->full_logs_on)
+				fprint_fd(s->fd, "room %s can go to %s\n", \
+						room->name, room->link[i]->name);
 			return (1);
 		}
 	}
-	fprint_fd(s->fd, "room %s cannot go to %s\n", \
-			room->name, room->link[i]->name);
+	if (s->full_logs_on)
+		fprint_fd(s->fd, "room %s cannot go to %s\n", \
+				room->name, room->link[i]->name);
 	return (0);
 }
 

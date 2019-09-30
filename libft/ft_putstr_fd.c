@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 16:43:20 by bsabre-c          #+#    #+#             */
-/*   Updated: 2018/12/01 16:45:12 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/29 15:31:36 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,10 @@
 
 void	ft_putstr_fd(char const *s, int fd)
 {
-	int i;
+	size_t	len;
 
-	if (s)
-	{
-		i = 0;
-		while (s[i])
-		{
-			ft_putchar_fd(s[i], fd);
-			i++;
-		}
-	}
+	if (!s)
+		return ;
+	len = ft_strlen(s);
+	write(fd, s, len);
 }

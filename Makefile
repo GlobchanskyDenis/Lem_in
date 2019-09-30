@@ -6,7 +6,7 @@
 #    By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/16 14:32:21 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/09/28 17:24:15 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/09/30 13:54:33 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ lemin :
 			@rm -f log.txt
 			@touch log.txt
 			@chmod 777 log.txt
-			@valgrind --leak-check=full --show-leak-kinds=all -v ./$(LEMIN_NAME) < maps/src7
+			@valgrind ./$(LEMIN_NAME) -error < maps/src01
 			@rm -rf lem-in.dSYM
 
 all : $(LEMIN_NAME)

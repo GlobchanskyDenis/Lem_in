@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:49:39 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 20:14:59 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/09/29 13:55:09 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	check_flags(int ac, char **av, t_data *s)
 			s->err_flag_on = 1;
 		if (!ft_strcmp(av[i], "-grafix"))
 			s->grafix_on = 1;
+		if (!ft_strcmp(av[i], "-logs"))
+			s->full_logs_on = 1;
 		i++;
 	}
 }
