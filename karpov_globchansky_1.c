@@ -229,11 +229,18 @@ static size_t	count_size(size_t *arr, short size, size_t max, int ants)
 	i = 0;
 	while (ants > 0)
 	{
-		if (i + 1 < size)
+		dst++;
+		i = 0;
+		while (i < size)
 		{
-			dst = dst + 
+			if (arr[i])
+				arr[i]--;
+			else
+				ants--;
+			i++;
 		}
 	}
+	return (dst);
 }
 
 static size_t	size_of_ant_queue(t_list **way_arr, t_data *s)
