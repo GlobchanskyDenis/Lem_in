@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:26:38 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/21 15:59:50 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/01 18:52:10 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_room	*add_room(t_room *room, t_data *s, short *room_flag)
 	return (tmp);
 }
 
-static void		check_names(t_room *room, t_data *s)
+static void		check_names_and_overlap(t_room *room, t_data *s)
 {
 	t_room		*prev;
 
@@ -65,7 +65,11 @@ static void		check_names(t_room *room, t_data *s)
 		while (prev)
 		{
 			if (!ft_strcmp(room->name, prev->name))
-				free_exit(room, s, 1, "check_names invalid name");
+				free_exit(room, s, 1, \
+						"check_names_and_overlap - two rooms has same name");
+			if (room->width == prev->width && room->height == prev->height)
+				free_exit(room, s, 1, \
+						"check_names_and_overlap - some rooms is overlapping");
 			prev = prev->prev;
 		}
 		room = room->prev;
@@ -97,6 +101,6 @@ t_room			*read_rooms(t_data *s)
 			}
 		}
 	}
-	check_names(room, s);
+	check_names_and_overlap(room, s);
 	return (get_first_last_room(room, s));
 }

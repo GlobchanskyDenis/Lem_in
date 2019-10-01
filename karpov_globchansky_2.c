@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 18:08:19 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 16:50:31 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:52:28 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void		cut_middle(t_list *head, t_list *tail, t_data *s)
 	middle->next = NULL;
 	s->end_conf = ((t_room *)(head->content))->name;
 	s->start_conf = ((t_room *)(middle->content))->name;
-	kill_tlist(head->next);
+	kill_tlist(head->next, 0);
 	head->next = NULL;
 }
 
@@ -113,5 +113,6 @@ int				conflict_solver(t_list **way_arr, t_data *s)
 	if (!(s->tail2 = cut_way2(way_arr, s->conflict_way2, s)))
 		return (-1);
 	its_alive(way_arr, s);
+	renumber_way_array_len(way_arr, s);
 	return (0);
 }

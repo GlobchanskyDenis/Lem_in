@@ -6,7 +6,7 @@
 #    By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/16 14:32:21 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/09/30 13:54:33 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/10/01 21:05:20 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC_LEMIN	= $(DIR)main.c					$(DIR)new_room.c		\
 			  $(DIR)array.c					$(DIR)dijkstra_1.c		\
 			  $(DIR)karpov_globchansky_1.c	$(DIR)dijkstra_2.c		\
 			  $(DIR)karpov_globchansky_2.c	$(DIR)queue.c			\
-			  $(DIR)karpov_globchansky_3.c
+			  $(DIR)karpov_globchansky_3.c	$(DIR)cpy_way_array.c	\
+			  $(DIR)karpov_globchansky_4.c	$(DIR)kill_tlist.c
 SRC_GRAFIX	= 
 INC_LEMIN	= $(DIR)lem_in.h
 INC_GRAFIX	= $(DIR)grafix.h
@@ -57,7 +58,7 @@ lemin :
 			@rm -f log.txt
 			@touch log.txt
 			@chmod 777 log.txt
-			@valgrind ./$(LEMIN_NAME) -error < maps/src01
+			@./$(LEMIN_NAME) -error -logs < maps/end_before_nb_ants
 			@rm -rf lem-in.dSYM
 
 all : $(LEMIN_NAME)

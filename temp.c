@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:12:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 16:40:47 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/01 14:20:38 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		print_way(t_list *lst, int way, t_data *s)
 
 	if (!s || !lst)
 		return ;
-	fprint_fd(s->fd, "=== way %d ===\n", way);
+	fprint_fd(s->fd, "=== way %d === len %d\n", way, (int)lst->content_size);
 	while (lst->next)
 	{
 		tmp = lst;

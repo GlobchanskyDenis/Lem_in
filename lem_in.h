@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:39:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/29 13:55:45 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/01 20:29:54 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define FLAG_ROOM	0
 # define FLAG_START	1
 # define FLAG_END	2
+# define INTMAX		2147483646
+# define BUFF_SIZE	10
 
 typedef struct	s_room
 {
@@ -69,10 +71,13 @@ void			print_all_ways(t_list **way_arr, t_data *s);
 void			queue_push_back(t_list *queue, void *void_ptr, t_data *s);
 t_list			*queue_kill_go_next(t_list *queue, t_room *room, t_data *s);
 int				mark_links_till_end(t_list *queue, t_room *room_lst, t_data *s);
-void			kill_tlist(t_list *lst);
-void			kill_tlist_array(t_list **arr);
+void			kill_tlist(t_list *lst, short free_content);
+void			kill_tlist_array(t_list **arr, short free_content);
 t_list			**karpov_globchansky(t_room *room, t_data *s);
 int				conflict_solver(t_list **way_arr, t_data *s);
 void			its_alive(t_list **way_arr, t_data *s);
+void			renumber_way_array_len(t_list **way_arr, t_data *s);
+t_list			**cpy_way_arr(t_list **src, t_list **to_delete, t_data *s);
+int				can_continue(t_list **way_arr, t_list ***old, t_data *s);
 
 #endif

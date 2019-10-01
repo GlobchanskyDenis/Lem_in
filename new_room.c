@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:51:25 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/19 10:14:28 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/01 20:34:13 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,27 @@ static int		find_room_position(t_room *room, char *src, short name_len)
 	return (1);
 }
 
+static void		line_validation(t_room **room, char **src_string)
+{
+	t_room	*tmp;
+	char	*str;
+	size_t	size;
+
+	tmp = *room;
+	size = ft_strlen(tmp->name) + 2;
+	if (!(str = ft_itoa(tmp->width)))
+		return ;
+	size = size + ft_strlen(str);
+	free(str);
+	if (!(str = ft_itoa(tmp->height)))
+		return ;
+	size = size + ft_strlen(str);
+	free(str);
+	if (size != ft_strlen(*src_string))
+		kill_room(room);
+	ft_strdel(src_string);
+}
+
 t_room			*new_room(char **src_string, short room_flag)
 {
 	t_room	*dst;
@@ -80,6 +101,6 @@ t_room			*new_room(char **src_string, short room_flag)
 		ft_strdel(src_string);
 		return (NULL);
 	}
-	ft_strdel(src_string);
+	line_validation(&dst, src_string);
 	return (dst);
 }

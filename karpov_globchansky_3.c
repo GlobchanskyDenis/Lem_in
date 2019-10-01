@@ -6,13 +6,13 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 16:47:16 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/28 16:51:04 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:54:26 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void	change_way_number(t_list *way, int way1, int way2)
+static void		change_way_number(t_list *way, int way1, int way2)
 {
 	if (!way)
 		return ;
@@ -26,7 +26,7 @@ static void	change_way_number(t_list *way, int way1, int way2)
 	}
 }
 
-void		its_alive(t_list **way_arr, t_data *s)
+void			its_alive(t_list **way_arr, t_data *s)
 {
 	t_list	*head;
 
@@ -42,4 +42,31 @@ void		its_alive(t_list **way_arr, t_data *s)
 		head = head->next;
 	head->next = s->tail1;
 	change_way_number(head->next, s->conflict_way1, s->conflict_way2);
+}
+
+static size_t	renumber_way_len(t_list *lst)
+{
+	if (!lst)
+		return (0);
+	if (!(lst->next))
+	{
+		lst->content_size = 0;
+		return (0);
+	}
+	lst->content_size = renumber_way_len(lst->next) + 1;
+	return (lst->content_size);
+}
+
+void			renumber_way_array_len(t_list **way_arr, t_data *s)
+{
+	short	i;
+
+	if (!way_arr || !s)
+		return ;
+	i = 0;
+	while (way_arr[i])
+	{
+		renumber_way_len(way_arr[i]);
+		i++;
+	}
 }

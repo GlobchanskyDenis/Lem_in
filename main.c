@@ -6,20 +6,21 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:49:39 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/09/29 13:55:09 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/01 20:42:09 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int	read_ants(t_data *s)
+static int		read_ants(t_data *s)
 {
 	char	*tmp;
 	int		ret;
 
 	if (!s)
 		return (0);
-	while (gnl(0, &(s->line)) && (s->line)[0] == '#')
+	while (gnl(0, &(s->line)) && (s->line)[0] == '#' && \
+			ft_strcmp(s->line, "##start") && ft_strcmp(s->line, "##end"))
 		ft_strdel(&(s->line));
 	if (!(s->line))
 		return (0);
@@ -34,10 +35,11 @@ static int	read_ants(t_data *s)
 		fprint_fd(s->fd, "invalid line with ants\n");
 		return (0);
 	}
+	ft_strdel(&(s->line));
 	return (1);
 }
 
-static void	check_flags(int ac, char **av, t_data *s)
+static void		check_flags(int ac, char **av, t_data *s)
 {
 	int		i;
 
@@ -56,7 +58,25 @@ static void	check_flags(int ac, char **av, t_data *s)
 	}
 }
 
-int			main(int ac, char **av)
+static t_room	*read_input(int ac, char **av, t_data *s)
+{
+	t_room	*room;
+
+	if (!s || !av)
+		free_exit(NULL, s, 0, "empty pointer");
+	ft_bzero(s, sizeof(t_data));
+	check_flags(ac, av, s);
+	if ((s->fd = open("log.txt", O_RDWR | O_CREAT)) < 1)
+		free_exit(NULL, s, 1, "cant open file log.txt");
+	if (!read_ants(s))
+		free_exit(NULL, s, 1, "read_ants");
+	if (!(room = read_rooms(s)))
+		free_exit(NULL, s, 1, "read rooms incorrect");
+	make_linkage(room, s);
+	return (room);
+}
+
+int				main(int ac, char **av)
 {
 	t_room	*room;
 	t_data	*s;
@@ -64,21 +84,14 @@ int			main(int ac, char **av)
 
 	if (!(s = (t_data *)malloc(sizeof(t_data))))
 		return (-1);
-	ft_bzero(s, sizeof(t_data));
-	check_flags(ac, av, s);
-	s->fd = open("log.txt", O_RDWR | O_CREAT);
-	if (!read_ants(s))
-		free_exit(NULL, s, 1, "read ants");
-	ft_strdel(&(s->line));
-	if (!(room = read_rooms(s)))
-		free_exit(room, s, 1, "read rooms incorrect");
-	make_linkage(room, s);
-	if (!(way_arr = karpov_globchansky(room, s)))
+	if (!(room = read_input(ac, av, s)))
+		free_exit(room, s, 1, "error on input");
+	if (!(way_arr = karpov_globchansky(room, s)) || !(*way_arr))
 		free_exit(room, s, 0, "no ways");
 	temp_print_roomlist(room, s);
 	print_all_ways(way_arr, s);
 	s->exit_without_message = 1;
-	kill_tlist_array(way_arr);
+	kill_tlist_array(way_arr, 1);
 	free_exit(room, s, 0, NULL);
 	return (0);
 }
