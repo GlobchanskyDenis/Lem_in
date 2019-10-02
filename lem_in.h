@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:39:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/01 20:29:54 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/02 16:55:05 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_room
 	int				way;
 	int				mark;
 	int				flag;
+	size_t			ant;
 	struct s_room	*next;
 	struct s_room	*prev;
 	struct s_room	*prev_room;
@@ -40,6 +41,7 @@ typedef struct	s_room
 typedef struct	s_data
 {
 	char			*line;
+	int				steps;
 	int				ants;
 	int				fd;
 	t_list			*tail1;
@@ -79,5 +81,8 @@ void			its_alive(t_list **way_arr, t_data *s);
 void			renumber_way_array_len(t_list **way_arr, t_data *s);
 t_list			**cpy_way_arr(t_list **src, t_list **to_delete, t_data *s);
 int				can_continue(t_list **way_arr, t_list ***old, t_data *s);
+t_list			**prepare_ant_queues(t_list **way_arr, t_data *s);
+void			print_ant_queues(t_list **way_arr, t_list **ant_queues, \
+		t_data *s);
 
 #endif

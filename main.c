@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:49:39 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/01 20:42:09 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/02 17:27:26 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int				main(int ac, char **av)
 	t_room	*room;
 	t_data	*s;
 	t_list	**way_arr;
+	t_list	**ant_queues;
 
 	if (!(s = (t_data *)malloc(sizeof(t_data))))
 		return (-1);
@@ -90,8 +91,15 @@ int				main(int ac, char **av)
 		free_exit(room, s, 0, "no ways");
 	temp_print_roomlist(room, s);
 	print_all_ways(way_arr, s);
+	if (!(ant_queues = prepare_ant_queues(way_arr, s)))
+	{
+		kill_tlist_array(way_arr, 1);
+		free_exit(room, s, 0, "problem with ant queues");
+	}
+	print_ant_queues(way_arr, ant_queues, s);
 	s->exit_without_message = 1;
+	kill_tlist_array(ant_queues, 0);
 	kill_tlist_array(way_arr, 1);
-	free_exit(room, s, 0, NULL);
+	free_exit(room, s, 0, "no message");
 	return (0);
 }
