@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:26:38 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/01 18:52:10 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 14:24:06 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,15 @@ static t_room	*add_room(t_room *room, t_data *s, short *room_flag)
 	return (tmp);
 }
 
-static void		check_names_and_overlap(t_room *room, t_data *s)
+static void		check_names_and_overlap(t_room *room, short room_flag, \
+		t_data *s)
 {
 	t_room		*prev;
 
 	if (!room || !s)
 		free_exit(room, s, 1, "check_names empty pointer");
+	if (room_flag != FLAG_ROOM)
+		free_exit(room, s, 1, "check_names start / end commit before linkage");
 	while (room->next)
 		room = room->next;
 	while (room->prev)
@@ -89,7 +92,7 @@ t_room			*read_rooms(t_data *s)
 	room = NULL;
 	while (is_room_flag)
 	{
-		if (gnl(0, &(s->line)) < 3 || \
+		if (gnl(0, &(s->line)) < 1 || \
 				ft_strchr(s->line, (int)'-') || (s->line)[0] == 'L')
 			is_room_flag = 0;
 		else
@@ -101,6 +104,6 @@ t_room			*read_rooms(t_data *s)
 			}
 		}
 	}
-	check_names_and_overlap(room, s);
+	check_names_and_overlap(room, room_flag, s);
 	return (get_first_last_room(room, s));
 }

@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:44:51 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/02 21:17:05 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 11:27:05 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,19 @@ static void		make_not_allowed_arrays(t_room *room, t_data *s)
 	}
 }
 
-static void		free_temp(char **line, char **arr)
+static void		link_and_free(t_room *room1, t_room *room2, char **arr,
+		t_data *s)
 {
-	if (!line || !arr)
+	if (!room1 || !room2 || !s || !arr)
 		return ;
-	ft_strdel(line);
+	if (s->full_logs_on)
+		fprint_fd(s->fd, "room %s links room %s", room1->name, room2->name);
+	if (link_isnt_exists(room1, room2, s) > 0)
+	{
+		room1->link = make_bigger_array_and_fill(room1->link, room2);
+		room2->link = make_bigger_array_and_fill(room2->link, room1);
+	}
+	ft_strdel(&(s->line));
 	ft_strdel(&(arr[0]));
 	ft_strdel(&(arr[1]));
 	free(arr);
@@ -95,18 +103,17 @@ void			make_linkage(t_room *lst, t_data *s)
 		free_exit(lst, s, 1, "make_linkage empty pointer");
 	while (1)
 	{
-		if (!(arr = ft_strsplit(s->line, '-')) || count_words(arr) != 2)
-			free_exit(lst, s, 1, "make_linkage invalid line");
-		if (!(room1 = find_room(lst, arr[0], s)) || \
-				!(room2 = find_room(lst, arr[1], s)))
-			free_exit(lst, s, 1, "make_linkage invalid room name");
-		fprint_fd(s->fd, "room %s links room %s\n", room1->name, room2->name);
-		if (link_isnt_exists(room1, room2, s) > 0)
+		if (check_line(lst, s))
 		{
-			room1->link = make_bigger_array_and_fill(room1->link, room2);
-			room2->link = make_bigger_array_and_fill(room2->link, room1);
+			if (!(arr = ft_strsplit(s->line, '-')) || count_words(arr) != 2)
+				free_exit(lst, s, 1, "make_linkage - invalid line");
+			if (!(room1 = find_room(lst, arr[0], s)) || \
+						!(room2 = find_room(lst, arr[1], s)))
+				free_exit(lst, s, 1, "make linkage - invalid room");
+			link_and_free(room1, room2, arr, s);
 		}
-		free_temp(&(s->line), arr);
+		else
+			ft_strdel(&(s->line));
 		if (gnl(0, &(s->line)) == 0)
 			break ;
 	}

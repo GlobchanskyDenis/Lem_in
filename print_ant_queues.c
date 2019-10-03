@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:46:05 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/02 21:18:32 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 11:42:04 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		temp_print_ant_queues(t_list **ant_queues, t_data *s)
 	short	i;
 	t_list	*queue;
 
-	if (!s || !ant_queues)
+	if (!s || !ant_queues || !s->full_logs_on)
 		return ;
 	i = 0;
 	while (ant_queues[i])
@@ -98,5 +98,4 @@ void		print_ant_queues(t_list **way_arr, t_list **ant_queues, t_data *s)
 		}
 		ft_putchar('\n');
 	}
-	fprint("%d\n", (int)s->steps);
 }

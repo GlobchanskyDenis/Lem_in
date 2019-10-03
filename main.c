@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:49:39 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/02 17:27:26 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 12:07:27 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,27 @@ static t_room	*read_input(int ac, char **av, t_data *s)
 	return (room);
 }
 
+static void		close_all(t_list **ant_queues, t_list **way_arr, t_room *room, \
+		t_data *s)
+{
+	if (ant_queues)
+		kill_tlist_array(ant_queues, 0);
+	if (way_arr)
+		kill_tlist_array(way_arr, 1);
+	if (room)
+		kill_roomlist(room);
+	if (s)
+	{
+		if (s->full_logs_on)
+			fprint("number of lines = %d\n", s->steps);
+		fprint_fd(s->fd, "number of lines = %d", s->steps);
+		if (s->line)
+			ft_strdel(&(s->line));
+		close(s->fd);
+		free(s);
+	}
+}
+
 int				main(int ac, char **av)
 {
 	t_room	*room;
@@ -97,9 +118,6 @@ int				main(int ac, char **av)
 		free_exit(room, s, 0, "problem with ant queues");
 	}
 	print_ant_queues(way_arr, ant_queues, s);
-	s->exit_without_message = 1;
-	kill_tlist_array(ant_queues, 0);
-	kill_tlist_array(way_arr, 1);
-	free_exit(room, s, 0, "no message");
+	close_all(ant_queues, way_arr, room, s);
 	return (0);
 }

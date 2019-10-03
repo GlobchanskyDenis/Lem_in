@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:39:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/02 16:55:05 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:01:42 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define FLAG_END	2
 # define INTMAX		2147483646
 # define BUFF_SIZE	10
+# define FD_LIMIT	100
 
 typedef struct	s_room
 {
@@ -53,13 +54,13 @@ typedef struct	s_data
 	int				err_flag_on;
 	int				grafix_on;
 	int				full_logs_on;
-	int				exit_without_message;
 }				t_data;
 
 void			temp_print_roomlist(t_room *room, t_data *s);
 void			free_exit(t_room *room, t_data *s, int need_to_read_all, \
 		char *message);
 void			kill_room(t_room **room);
+void			kill_roomlist(t_room *room);
 t_room			*new_room(char **src_string, short room_flag);
 t_room			*read_rooms(t_data *s);
 int				gnl(int fd, char **line);
@@ -84,5 +85,6 @@ int				can_continue(t_list **way_arr, t_list ***old, t_data *s);
 t_list			**prepare_ant_queues(t_list **way_arr, t_data *s);
 void			print_ant_queues(t_list **way_arr, t_list **ant_queues, \
 		t_data *s);
+int				check_line(t_room *room, t_data *s);
 
 #endif
