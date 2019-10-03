@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:39:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 16:01:42 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:48:47 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,30 @@
 # define LEM_IN_H
 
 # include "libft/libft.h"
+# include "mlx/mlx.h"
 
-# define FLAG_ROOM	0
-# define FLAG_START	1
-# define FLAG_END	2
-# define INTMAX		2147483646
-# define BUFF_SIZE	10
-# define FD_LIMIT	100
+# define FLAG_ROOM		0
+# define FLAG_START		1
+# define FLAG_END		2
+# define INTMAX			2147483646
+# define BUFF_SIZE		10
+# define FD_LIMIT		100
+# define OFFSET			30
+# define LINE_OFFSET	15
+# define WIN_SIZE_HOR	1500
+# define WIN_SIZE_VERT	1200
+# define ESCAPE			53
+
+typedef struct	s_pos
+{
+	int				hor;
+	int				vert;
+}				t_pos;
 
 typedef struct	s_room
 {
 	short			room_flag;
-	int				width;
-	int				height;
+	t_pos			pos;
 	char			*name;
 	int				way;
 	int				mark;
@@ -54,6 +65,15 @@ typedef struct	s_data
 	int				err_flag_on;
 	int				grafix_on;
 	int				full_logs_on;
+	t_pos			max_pos;
+	t_pos			min_pos;
+	t_pos			size;
+	t_pos			win_size;
+	void			*mlx;
+	void			*win;
+	void			*bg_img;
+	short			is_pause;
+	short			is_end;
 }				t_data;
 
 void			temp_print_roomlist(t_room *room, t_data *s);
@@ -86,5 +106,12 @@ t_list			**prepare_ant_queues(t_list **way_arr, t_data *s);
 void			print_ant_queues(t_list **way_arr, t_list **ant_queues, \
 		t_data *s);
 int				check_line(t_room *room, t_data *s);
+
+int				loop_hook(t_data *s);
+int				mouse_pause(int param, int x, int y, t_data *s);
+int				key_escape(int key, t_data *s);
+int				grafix(t_list **way_arr, t_list **ant_queues, t_room *room, \
+		t_data *s);
+int				draw_line(t_pos begin, t_pos end, int color, t_data *s);
 
 #endif

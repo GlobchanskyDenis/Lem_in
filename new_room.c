@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:51:25 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/01 20:34:13 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:33:33 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ static int		find_room_position(t_room *room, char *src, short name_len)
 		i++;
 	if (src[i] == '\0' || i >= 100)
 		return (0);
-	room->width = ft_atoi(&(src[i]));
+	room->pos.hor = ft_atoi(&(src[i]));
 	while (src[i] && i < 100 && src[i] != ' ')
 		i++;
 	while (src[i] && i < 100 && (src[i] < '0' || src[i] > '9'))
 		i++;
 	if (src[i] == '\0' || i >= 100)
 		return (0);
-	room->height = ft_atoi(&(src[i]));
+	room->pos.vert = ft_atoi(&(src[i]));
 	return (1);
 }
 
@@ -65,11 +65,11 @@ static void		line_validation(t_room **room, char **src_string)
 
 	tmp = *room;
 	size = ft_strlen(tmp->name) + 2;
-	if (!(str = ft_itoa(tmp->width)))
+	if (!(str = ft_itoa(tmp->pos.hor)))
 		return ;
 	size = size + ft_strlen(str);
 	free(str);
-	if (!(str = ft_itoa(tmp->height)))
+	if (!(str = ft_itoa(tmp->pos.vert)))
 		return ;
 	size = size + ft_strlen(str);
 	free(str);

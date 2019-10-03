@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:12:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/01 14:20:38 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:35:09 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void		temp_print_roomlist(t_room *room, t_data *s)
 	while (room)
 	{
 		fprint_fd(s->fd, "room '%s'\tx '%d' y '%d'\t way %d\t mark %d   \t", \
-				room->name, room->width, room->height, room->way, room->mark);
+				room->name, room->pos.hor, room->pos.vert, room->way, \
+				room->mark);
 		if (room->room_flag == FLAG_ROOM)
 			fprint_fd(s->fd, "ROOM\t");
 		else if (room->room_flag == FLAG_END)

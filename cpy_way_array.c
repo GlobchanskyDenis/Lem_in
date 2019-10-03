@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:45:30 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/01 17:26:55 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 19:13:44 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static t_list	*cpy_node(t_room *src, int cont_size)
 		free(dst);
 		return (NULL);
 	}
+	*room = *src;
 	if (!(room->name = ft_strdup(src->name)))
 	{
 		free(dst);

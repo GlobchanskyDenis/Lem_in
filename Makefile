@@ -6,7 +6,7 @@
 #    By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/16 14:32:21 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/10/03 14:38:27 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/10/03 18:59:22 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRC_LEMIN	= $(DIR)main.c					$(DIR)new_room.c		\
 			  $(DIR)karpov_globchansky_4.c	$(DIR)kill_tlist.c		\
 			  $(DIR)prepare_ant_queue.c		$(DIR)print_ant_queues.c\
 			  $(DIR)make_linkage_2.c
-SRC_GRAFIX	= 
+SRC_GRAFIX	= $(DIR)grafix.c				$(DIR)grafix_hooks.c	\
+			  $(DIR)grafix_draw_line.c
 INC_LEMIN	= $(DIR)lem_in.h
 INC_GRAFIX	= $(DIR)grafix.h
 MLX			= mlx/libmlx.a -lmlx -framework OpenGL -framework AppKit
@@ -39,8 +40,8 @@ L_FT_A 		= $(L_FT)libft.a
 
 $(NAME) :
 			@make -sC $(L_FT)
-			@echo "Combiling lem_in"
-			@gcc $(FLAGS) $(SRC_LEMIN) -I$(INC_LEMIN) $(L_FT_A) -o $(NAME)
+			@echo "Compiling lem_in"
+			@gcc $(FLAGS) $(SRC_LEMIN) $(SRC_GRAFIX) -I$(INC_LEMIN) $(L_FT_A) $(MLX) -o $(NAME)
 			@rm -rf $(NAME).dSYM
 			@echo "file $(NAME) was created succesfully"
 
@@ -61,7 +62,7 @@ lemin :
 			@rm -f log.txt
 			@touch log.txt
 			@chmod 777 log.txt
-			@valgrind ./$(NAME) -error -logs < maps/src1
+			@./$(NAME) -error -logs < maps/src1
 			@rm -rf $(NAME).dSYM
 
 all : $(NAME)

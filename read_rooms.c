@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:26:38 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 14:24:06 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:30:51 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_room	*add_room(t_room *room, t_data *s, short *room_flag)
 		free_exit(room, s, 1, "add_room empty pointer");
 	*room_flag = FLAG_ROOM;
 	fprint_fd(s->fd, "room was created. Name '%s' x '%d' y '%d'\n", \
-			tmp->name, tmp->width, tmp->height);
+			tmp->name, tmp->pos.hor, tmp->pos.vert);
 	if (!room)
 		return (tmp);
 	while (room->next)
@@ -51,8 +51,7 @@ static t_room	*add_room(t_room *room, t_data *s, short *room_flag)
 	return (tmp);
 }
 
-static void		check_names_and_overlap(t_room *room, short room_flag, \
-		t_data *s)
+static void		check_names_overlap(t_room *room, short room_flag, t_data *s)
 {
 	t_room		*prev;
 
@@ -69,10 +68,10 @@ static void		check_names_and_overlap(t_room *room, short room_flag, \
 		{
 			if (!ft_strcmp(room->name, prev->name))
 				free_exit(room, s, 1, \
-						"check_names_and_overlap - two rooms has same name");
-			if (room->width == prev->width && room->height == prev->height)
-				free_exit(room, s, 1, \
-						"check_names_and_overlap - some rooms is overlapping");
+						"check_names_overlap - two rooms has same name");
+			if (room->pos.hor == prev->pos.hor && room->pos.vert == \
+					prev->pos.vert)
+				free_exit(room, s, 1, "check_names_overlap - coord overlap");
 			prev = prev->prev;
 		}
 		room = room->prev;
@@ -104,6 +103,6 @@ t_room			*read_rooms(t_data *s)
 			}
 		}
 	}
-	check_names_and_overlap(room, room_flag, s);
+	check_names_overlap(room, room_flag, s);
 	return (get_first_last_room(room, s));
 }
