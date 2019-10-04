@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:39:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 18:48:47 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/04 13:37:02 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define INTMAX			2147483646
 # define BUFF_SIZE		10
 # define FD_LIMIT		100
-# define OFFSET			30
+# define OFFSET			60
 # define LINE_OFFSET	15
 # define WIN_SIZE_HOR	1500
 # define WIN_SIZE_VERT	1200
@@ -112,6 +112,7 @@ int				mouse_pause(int param, int x, int y, t_data *s);
 int				key_escape(int key, t_data *s);
 int				grafix(t_list **way_arr, t_list **ant_queues, t_room *room, \
 		t_data *s);
-int				draw_line(t_pos begin, t_pos end, int color, t_data *s);
+void			draw_line(t_pos a, t_pos b, int color, t_data *s);
+void			draw_room_web(t_room *room, t_data *s);
 
 #endif

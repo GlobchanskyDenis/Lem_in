@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:49:39 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 17:32:46 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/04 13:09:17 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ int				main(int ac, char **av)
 		free_exit(room, s, 0, "problem with ant queues");
 	}
 	print_ant_queues(way_arr, ant_queues, s);
-	grafix(way_arr, ant_queues, room, s);
+	if (s->grafix_on)
+		grafix(way_arr, ant_queues, room, s);
 	close_all(ant_queues, way_arr, room, s);
 	return (0);
 }
