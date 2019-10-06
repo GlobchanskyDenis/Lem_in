@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 12:49:39 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/04 13:09:17 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/06 17:54:11 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		read_ants(t_data *s)
 	if (!s)
 		return (0);
 	while (gnl(0, &(s->line)) && (s->line)[0] == '#' && \
-			ft_strcmp(s->line, "##start") && ft_strcmp(s->line, "##end"))
+			!ft_strcmp(s->line, "##start") && !ft_strcmp(s->line, "##end"))
 		ft_strdel(&(s->line));
 	if (!(s->line))
 		return (0);
@@ -76,7 +76,7 @@ static t_room	*read_input(int ac, char **av, t_data *s)
 	return (room);
 }
 
-static void		close_all(t_list **ant_queues, t_list **way_arr, t_room *room, \
+void			close_all(t_list **ant_queues, t_list **way_arr, t_room *room, \
 		t_data *s)
 {
 	if (ant_queues)
@@ -88,7 +88,7 @@ static void		close_all(t_list **ant_queues, t_list **way_arr, t_room *room, \
 	if (s)
 	{
 		if (s->full_logs_on)
-			fprint("number of lines = %d\n", s->steps);
+			fprint("number of steps = %d\n", s->steps);
 		fprint_fd(s->fd, "number of lines = %d", s->steps);
 		if (s->line)
 			ft_strdel(&(s->line));
@@ -99,27 +99,25 @@ static void		close_all(t_list **ant_queues, t_list **way_arr, t_room *room, \
 
 int				main(int ac, char **av)
 {
-	t_room	*room;
 	t_data	*s;
-	t_list	**way_arr;
-	t_list	**ant_queues;
 
 	if (!(s = (t_data *)malloc(sizeof(t_data))))
 		return (-1);
-	if (!(room = read_input(ac, av, s)))
-		free_exit(room, s, 1, "error on input");
-	if (!(way_arr = karpov_globchansky(room, s)) || !(*way_arr))
-		free_exit(room, s, 0, "no ways");
-	temp_print_roomlist(room, s);
-	print_all_ways(way_arr, s);
-	if (!(ant_queues = prepare_ant_queues(way_arr, s)))
+	if (!(s->room = read_input(ac, av, s)))
+		free_exit(s->room, s, 1, "error on input");
+	if (!(s->way_arr = karpov_globchansky(s->room, s)) || !(s->way_arr[0]))
+		free_exit(s->room, s, 0, "no ways");
+	temp_print_roomlist(s->room, s);
+	print_all_ways(s->way_arr, s);
+	if (!(s->ant_queues = prepare_ant_queues(s->way_arr, s)))
 	{
-		kill_tlist_array(way_arr, 1);
-		free_exit(room, s, 0, "problem with ant queues");
+		kill_tlist_array(s->way_arr, 1);
+		free_exit(s->room, s, 0, "problem with ant queues");
 	}
-	print_ant_queues(way_arr, ant_queues, s);
 	if (s->grafix_on)
-		grafix(way_arr, ant_queues, room, s);
-	close_all(ant_queues, way_arr, room, s);
+		grafix(s);
+	else
+		print_ant_queues(s->way_arr, s->ant_queues, s);
+	close_all(s->ant_queues, s->way_arr, s->room, s);
 	return (0);
 }

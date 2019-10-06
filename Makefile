@@ -6,7 +6,7 @@
 #    By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/16 14:32:21 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/10/04 21:07:29 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/10/06 17:52:48 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,12 @@ SRC_LEMIN	= $(DIR)main.c					$(DIR)new_room.c				\
 			  $(DIR)karpov_globchansky_3.c	$(DIR)cpy_way_array.c			\
 			  $(DIR)karpov_globchansky_4.c	$(DIR)kill_tlist.c				\
 			  $(DIR)prepare_ant_queue.c		$(DIR)print_ant_queues.c		\
-			  $(DIR)make_linkage_2.c
+			  $(DIR)make_linkage_2.c		$(DIR)teleport_ants.c
 SRC_GRAFIX	= $(DIR)grafix.c				$(DIR)grafix_hooks.c			\
-			  $(DIR)grafix_draw_line.c		$(DIR)grafix_draw_room_web.c	
-INC_LEMIN	= $(DIR)lem_in.h
-INC_GRAFIX	= $(DIR)grafix.h
+			  $(DIR)grafix_draw_line.c		$(DIR)grafix_draw_room_web.c	\
+			  $(DIR)grafix_draw_ants.c		$(DIR)grafix_make_step.c		\
+			  $(DIR)grafix_insert_rooms.c	$(DIR)grafix_insert_ants.c
+HEAD		= $(DIR)lem_in.h
 MLX			= mlx/libmlx.a -lmlx -framework OpenGL -framework AppKit
 
 # libraries
@@ -41,7 +42,7 @@ L_FT_A 		= $(L_FT)libft.a
 $(NAME) :
 			@make -sC $(L_FT)
 			@echo "Compiling lem_in"
-			@gcc $(FLAGS) $(SRC_LEMIN) $(SRC_GRAFIX) -I$(INC_LEMIN) $(L_FT_A) $(MLX) -o $(NAME)
+			@gcc $(FLAGS) $(SRC_LEMIN) $(SRC_GRAFIX) -I$(HEAD) $(L_FT_A) $(MLX) -o $(NAME)
 			@rm -rf $(NAME).dSYM
 			@echo "file $(NAME) was created succesfully"
 
@@ -61,10 +62,15 @@ fclean : clean
 lemin :
 			@rm -f log.txt
 			@touch log.txt
-			@chmod 777 log.txt
-			@./$(NAME) -error -logs -grafix < maps/src01
+			chmod 777 log.txt
+			@./$(NAME) -error < maps/src01
 			@rm -rf $(NAME).dSYM
 
 all : $(NAME)
+
+%.o: %.c $(HEAD)
+	    	@gcc $(FLAGS) -c -o $@ $<
+
+.PHONY: all, clean, fclean, re
 
 re: fclean all

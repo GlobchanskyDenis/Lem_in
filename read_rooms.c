@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:26:38 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 16:30:51 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/06 17:05:40 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static int		is_need_to_add_room(t_room *room, t_data *s, short *room_flag)
 		return (-1);
 	if ((s->line)[0] == '#')
 	{
-		if (*room_flag != FLAG_ROOM && (!ft_strncmp(s->line, "##start", 7) || \
-				!ft_strncmp(s->line, "##end", 5)))
+		if (*room_flag != FLAG_ROOM && (!ft_strcmp(s->line, "##start") || \
+				!ft_strcmp(s->line, "##end")))
 			free_exit(room, s, 1, "double start / end commit!");
-		if (!ft_strncmp(s->line, "##start", 7))
+		if (!ft_strcmp(s->line, "##start"))
 			*room_flag = FLAG_START;
-		else if (!ft_strncmp(s->line, "##end", 5))
+		else if (!ft_strcmp(s->line, "##end"))
 			*room_flag = FLAG_END;
 		ft_strdel(&(s->line));
 		return (0);

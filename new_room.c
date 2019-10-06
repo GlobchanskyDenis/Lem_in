@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:51:25 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 16:33:33 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/06 17:09:45 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static char		*find_room_name(char *src, short *name_len)
 	if (!src)
 		return (NULL);
 	len = 0;
-	while (src[len] && src[len] != ' ' && len < 50)
+	while (src[len] && src[len] != ' ' && len < 30000)
 		len++;
-	if (len >= 50)
+	if (len >= 30000)
 		return (NULL);
 	if (!(name = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
@@ -42,16 +42,16 @@ static int		find_room_position(t_room *room, char *src, short name_len)
 	if (!room || !src || name_len < 1)
 		return (0);
 	i = name_len;
-	while (src[i] && i < 100 && (src[i] < '0' || src[i] > '9'))
+	while (src[i] && i < 30000 && (src[i] < '0' || src[i] > '9'))
 		i++;
 	if (src[i] == '\0' || i >= 100)
 		return (0);
 	room->pos.hor = ft_atoi(&(src[i]));
-	while (src[i] && i < 100 && src[i] != ' ')
+	while (src[i] && i < 30000 && src[i] != ' ')
 		i++;
-	while (src[i] && i < 100 && (src[i] < '0' || src[i] > '9'))
+	while (src[i] && i < 30000 && (src[i] < '0' || src[i] > '9'))
 		i++;
-	if (src[i] == '\0' || i >= 100)
+	if (src[i] == '\0' || i >= 30000)
 		return (0);
 	room->pos.vert = ft_atoi(&(src[i]));
 	return (1);

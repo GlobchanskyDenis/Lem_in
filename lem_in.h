@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:39:21 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/04 13:37:02 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/06 16:19:33 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,18 @@
 # define INTMAX			2147483646
 # define BUFF_SIZE		10
 # define FD_LIMIT		100
-# define OFFSET			60
+# define OFFSET_HOR		140
+# define OFFSET_VERT	45
 # define LINE_OFFSET	15
-# define WIN_SIZE_HOR	1500
-# define WIN_SIZE_VERT	1200
+# define WIN_SIZE_HOR	1700
+# define WIN_SIZE_VERT	1300
 # define ESCAPE			53
+# define IMG_ROOM_HOR	70
+# define IMG_ROOM_VERT	42
+# define IMG_END_HOR	290
+# define IMG_END_VERT	130
+# define IMG_ANT_HOR	68
+# define IMG_ANT_VERT	43
 
 typedef struct	s_pos
 {
@@ -71,9 +78,15 @@ typedef struct	s_data
 	t_pos			win_size;
 	void			*mlx;
 	void			*win;
-	void			*bg_img;
+	void			*room_img;
+	void			*end_room_img;
+	void			*ant_img;
 	short			is_pause;
 	short			is_end;
+	t_list			**way_arr;
+	t_list			**ant_queues;
+	t_room			*room;
+	int				count;
 }				t_data;
 
 void			temp_print_roomlist(t_room *room, t_data *s);
@@ -106,13 +119,21 @@ t_list			**prepare_ant_queues(t_list **way_arr, t_data *s);
 void			print_ant_queues(t_list **way_arr, t_list **ant_queues, \
 		t_data *s);
 int				check_line(t_room *room, t_data *s);
+void			close_all(t_list **ant_queues, t_list **way_arr, t_room *room, \
+		t_data *s);
 
 int				loop_hook(t_data *s);
 int				mouse_pause(int param, int x, int y, t_data *s);
 int				key_escape(int key, t_data *s);
-int				grafix(t_list **way_arr, t_list **ant_queues, t_room *room, \
-		t_data *s);
+int				grafix(t_data *s);
 void			draw_line(t_pos a, t_pos b, int color, t_data *s);
 void			draw_room_web(t_room *room, t_data *s);
+void			draw_ants(t_list **way_arr, t_data *s);
+void			bzero_ant_nbrs(t_list **way_arr);
+void			make_step(t_list **way_arr, t_list **ant_queues, t_data *s);
+void			insert_rooms_in_way_arr(t_list **way_arr, t_data *s);
+void			insert_ants(t_list **ant_queues, t_data *s);
+void			print_ant_queues2(t_list **ant_queues);
+void			teleport_ants(t_room *room, t_data *s);
 
 #endif

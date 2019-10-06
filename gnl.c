@@ -6,15 +6,16 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 14:13:08 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 14:30:00 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/06 15:46:35 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int        ft_find_line(char **str_read, char **line)
+int			ft_find_line(char **str_read, char **line)
 {
 	char *tmp;
+
 	if ((*str_read)[0] == '\0')
 	{
 		ft_strdel(str_read);
@@ -40,7 +41,7 @@ int        ft_find_line(char **str_read, char **line)
 	return (1);
 }
 
-int        gnl(int const fd, char **line)
+int			gnl(int const fd, char **line)
 {
 	static char	*str[FD_LIMIT];
 	char		buf[BUFF_SIZE + 1];

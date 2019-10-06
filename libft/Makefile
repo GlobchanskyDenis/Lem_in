@@ -6,7 +6,7 @@
 #    By: forange- <forange-@student.fr.42>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 16:00:22 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/09/23 12:06:23 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/10/06 17:34:11 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,23 +44,28 @@ OBJECTS =	$(addprefix $(DIR_O)/,$(FILES:.c=.o))
 OBJ		=	$(FILES:.c=.o)
 
 $(NAME) :
-	@echo "Compiling libft files"
-	@mkdir $(DIR_O)
-	@gcc $(FLAGS) $(FILES) && mv $(OBJ) $(DIR_O)
-	@ar rc $(NAME) $(OBJECTS)
-	@ranlib $(NAME)
-	@echo "Done"
+			@echo "Compiling libft files"
+			@mkdir $(DIR_O)
+			@gcc $(FLAGS) $(FILES) && mv $(OBJ) $(DIR_O)
+			@ar rc $(NAME) $(OBJECTS)
+			@ranlib $(NAME)
+			@echo "Done"
 
 clean :
-	@echo "remove libft object files and some trash"
-	@rm -f $(OBJECTS)
-	@rm -rf $(DIR_O)
-	@rm -rf .DS_Store
-	@echo "Done"
+			@echo "remove libft object files and some trash"
+			@rm -f $(OBJECTS)
+			@rm -rf $(DIR_O)
+			@rm -rf .DS_Store
+			@echo "Done"
 
 fclean : clean
-	@echo "remove $(NAME)"
-	@rm -f $(NAME)
+			@echo "remove $(NAME)"
+			@rm -f $(NAME)
+
+%.o: %.c $(HEAD)
+		    @gcc $(FLAGS) -c -o $@ $<
+
+.PHONY: all, clean, fclean, re
 
 all : $(NAME)
 

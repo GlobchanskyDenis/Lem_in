@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:46:05 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 11:42:04 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/06 16:20:15 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void		bzero_ant_nbrs(t_list **way_arr)
 	}
 }
 
-void		print_ant_queues(t_list **way_arr, t_list **ant_queues, t_data *s)
+void		print_ant_queues_(t_list **way_arr, t_list **ant_queues, t_data *s)
 {
 	short	i;
 	t_list	*tmp;
@@ -98,4 +98,23 @@ void		print_ant_queues(t_list **way_arr, t_list **ant_queues, t_data *s)
 		}
 		ft_putchar('\n');
 	}
+}
+
+void		print_ant_queues(t_list **way_arr, t_list **ant_queues, t_data *s)
+{
+	t_list	*way;
+	t_room	*room;
+
+	if (!way_arr || !ant_queues || !s || !way_arr[0])
+		return ;
+	way = way_arr[0];
+	if (way->content_size == 1)
+	{
+		room = s->room;
+		while (room->next)
+			room = room->next;
+		teleport_ants(room, s);
+	}
+	else
+		print_ant_queues_(way_arr, ant_queues, s);
 }

@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 18:09:07 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/04 15:53:41 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/06 15:38:58 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	init_delta(t_pos *a, t_pos *b, t_pos *delta, t_data *s)
 {
 	if (!a || !b || !delta || !s)
 		return ;
-	a->hor = OFFSET + a->hor * s->win_size.hor / s->size.hor;
-	a->vert = OFFSET + a->vert * s->win_size.vert / s->size.vert;
-	b->hor = OFFSET + b->hor * s->win_size.hor / s->size.hor;
-	b->vert = OFFSET + b->vert * s->win_size.vert / s->size.vert;
+	a->hor = OFFSET_HOR + a->hor * s->win_size.hor / s->size.hor;
+	a->vert = OFFSET_VERT + a->vert * s->win_size.vert / s->size.vert;
+	b->hor = OFFSET_HOR + b->hor * s->win_size.hor / s->size.hor;
+	b->vert = OFFSET_VERT + b->vert * s->win_size.vert / s->size.vert;
 	delta->hor = (int)ft_absi(b->hor - a->hor);
 	delta->vert = (int)ft_absi(b->vert - a->vert);
 }
@@ -44,13 +44,11 @@ void	draw_line(t_pos a, t_pos b, int color, t_data *s)
 {
 	t_pos	delta;
 	t_pos	sign;
-	int			error[2];
+	int		error[2];
 
 	if (!s)
 		return ;
-	fprint("a %d %d b %d %d\n", a.hor, a.vert, b.hor, b.vert);
 	init_delta(&a, &b, &delta, s);
-	//fprint("a %d %d b %d %d\n", a.hor, a.vert, b.hor, b.vert);
 	sign.hor = a.hor < b.hor ? 1 : -1;
 	sign.vert = a.vert < b.vert ? 1 : -1;
 	error[0] = delta.hor - delta.vert;
@@ -62,5 +60,3 @@ void	draw_line(t_pos a, t_pos b, int color, t_data *s)
 		logic(&a, &delta, &sign, error);
 	}
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 12:44:51 by bsabre-c          #+#    #+#             */
-/*   Updated: 2019/10/03 11:27:05 by bsabre-c         ###   ########.fr       */
+/*   Updated: 2019/10/06 17:13:19 by bsabre-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void			make_linkage(t_room *lst, t_data *s)
 
 	if (!lst || !s)
 		free_exit(lst, s, 1, "make_linkage empty pointer");
+	if (!s->line || s->line[0] == 'L')
+		free_exit(lst, s, 1, "line dont exists or first letter is 'L'");
 	while (1)
 	{
 		if (check_line(lst, s))
@@ -108,7 +110,7 @@ void			make_linkage(t_room *lst, t_data *s)
 			if (!(arr = ft_strsplit(s->line, '-')) || count_words(arr) != 2)
 				free_exit(lst, s, 1, "make_linkage - invalid line");
 			if (!(room1 = find_room(lst, arr[0], s)) || \
-						!(room2 = find_room(lst, arr[1], s)))
+						!(room2 = find_room(lst, arr[1], s)) || room1 == room2)
 				free_exit(lst, s, 1, "make linkage - invalid room");
 			link_and_free(room1, room2, arr, s);
 		}
