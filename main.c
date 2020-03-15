@@ -111,6 +111,7 @@ int				main(int ac, char **av)
 	print_all_ways(s->way_arr, s);
 	if (!(s->ant_queues = prepare_ant_queues(s->way_arr, s)))
 	{
+        
 		kill_tlist_array(s->way_arr, 1);
 		free_exit(s->room, s, 0, "problem with ant queues");
 	}

@@ -6,7 +6,7 @@
 #    By: bsabre-c <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/16 14:32:21 by bsabre-c          #+#    #+#              #
-#    Updated: 2019/10/06 17:52:48 by bsabre-c         ###   ########.fr        #
+#    Updated: 2019/11/14 11:07:03 by bsabre-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,16 +54,15 @@ clean :
 			@echo "cleaning finished"
 
 fclean : clean
-			@rm -f $(L_FT_A)
-			@rm -f $(NAME)
+			@rm -rf $(L_FT_A)
+			@rm -rf $(NAME)
 			@rm -rf $(NAME).dSYM
-			@rm -f log.txt
 
 lemin :
-			@rm -f log.txt
+			@rm -rf log.txt
 			@touch log.txt
 			chmod 777 log.txt
-			@./$(NAME) -error < maps/src01
+			@./$(NAME) -error -grafix < maps/src2
 			@rm -rf $(NAME).dSYM
 
 all : $(NAME)
